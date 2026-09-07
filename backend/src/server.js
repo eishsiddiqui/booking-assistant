@@ -1,34 +1,47 @@
 const express = require("express");
+const cors = require("cors");
 const config = require("./config");
-const pool = require("./db/db");
+const authRoutes = require("./routes/authRoutes");
+const errorHandler = require("./middleware/errorHandler");
+const requestLogger = require("./middleware/logger");
+
+const { generalLimiter } = require("./middleware/rateLimiter");
 
 const app = express();
 
+app.use(
+  cors({
+    origin: config.clientUrl || "*",
+    credentials: true,
+  }),
+);
+
 app.use(express.json());
+
+app.use(requestLogger);
 
 app.get("/", (req, res) => {
   res.json({
-    message: "API is running",
+    message: "Booking Assistant API is running",
+    status: "healthy",
   });
 });
 
-app.get("/db-test", async (req, res) => {
-  try {
-    const result = await pool.query("SELECT current_database()");
+app.use("/api", generalLimiter);
 
-    res.json({
-      message: "Database connected successfully",
-      database: result.rows[0].current_database,
-    });
-  } catch (error) {
-    console.error("Database connection error:", error);
+app.use("/api/auth", authRoutes);
 
-    res.status(500).json({
-      message: "Database connection failed",
-    });
-  }
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route not found: ${req.method} ${req.originalUrl}`,
+  });
 });
+
+app.use(errorHandler);
 
 app.listen(config.port, () => {
   console.log(`Server running on port ${config.port}`);
 });
+
+module.exports = app;

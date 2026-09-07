@@ -10,6 +10,13 @@ const config = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
   },
+
+  jwt: {
+    secret: process.env.JWT_SECRET || "default_jwt_secret_dev_key",
+    expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+  },
+
+  clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
 };
 
 module.exports = config;
