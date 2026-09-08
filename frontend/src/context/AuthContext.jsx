@@ -1,42 +1,48 @@
-import { createContext, useState, useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useState } from "react";
 
 export const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const [token, setToken] = useState(() => {
     try {
-      const storedToken = localStorage.getItem("token");
-      const storedUser = localStorage.getItem("user");
-
-      if (storedToken && storedUser) {
-        setToken(storedToken);
-        setUser(JSON.parse(storedUser));
-      }
-    } catch (err) {
-      console.error("Failed to load auth state from storage:", err);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-    } finally {
-      setLoading(false);
+      return localStorage.getItem("token") || null;
+    } catch {
+      return null;
     }
-  }, []);
+  });
+
+  const [user, setUser] = useState(() => {
+    try {
+      const storedUser = localStorage.getItem("user");
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [loading] = useState(false);
 
   const login = (userData, authToken) => {
     setUser(userData);
     setToken(authToken);
-    localStorage.setItem("user", JSON.stringify(userData));
-    localStorage.setItem("token", authToken);
+    try {
+      localStorage.setItem("user", JSON.stringify(userData));
+      localStorage.setItem("token", authToken);
+    } catch (err) {
+      console.error("Failed to save auth state to storage:", err);
+    }
   };
 
   const logout = () => {
     setUser(null);
     setToken(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    try {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+    } catch (err) {
+      console.error("Failed to remove auth state from storage:", err);
+    }
   };
 
   const isAuthenticated = Boolean(token);
