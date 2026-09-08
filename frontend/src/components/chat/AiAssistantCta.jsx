@@ -1,4 +1,5 @@
 import { Bot, Sparkles, ArrowRight } from "lucide-react";
+import "./AiAssistantCta.css";
 
 export default function AiAssistantCta({ onStartChat }) {
   return (

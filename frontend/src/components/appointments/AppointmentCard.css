@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Appointment Card Component Styles
+   ========================================================================== */
+
+.appointment-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.03), 0 4px 12px -2px rgba(15, 23, 42, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  position: relative;
+}
+
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px -4px rgba(15, 23, 42, 0.08);
+  border-color: #cbd5e1;
+}
+
+/* Colored Left Accent Border matching Status */
+.appointment-card.status-border-scheduled {
+  border-left: 4.5px solid #2563eb;
+}
+
+.appointment-card.status-border-completed {
+  border-left: 4.5px solid #64748b;
+}
+
+.appointment-card.status-border-cancelled {
+  border-left: 4.5px solid #f43f5e;
+}
+
+.appointment-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+/* Status Pill Chip */
+.status-pill {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status-pill.status-pill-scheduled {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+}
+
+.status-pill.status-pill-completed {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.status-pill.status-pill-cancelled {
+  background-color: #fff1f2;
+  color: #e11d48;
+  border: 1px solid #fecdd3;
+}
+
+.card-info-icon-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.card-info-icon-btn:hover {
+  color: #2563eb;
+  background-color: #eff6ff;
+}
+
+/* Appointment Card Body */
+.appointment-card-body {
+  margin-bottom: 18px;
+}
+
+.appointment-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+  line-height: 1.35;
+}
+
+.appointment-meta-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-icon {
+  color: #94a3b8;
+}
+
+.meta-dot {
+  color: #cbd5e1;
+}
+
+/* Appointment Card Footer Action */
+.appointment-card-footer {
+  border-top: 1px solid #f1f5f9;
+  padding-top: 14px;
+}
+
+.appointment-details-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.appointment-details-btn:hover {
+  background-color: #eff6ff;
+  border-color: #93c5fd;
+  color: #1e40af;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(37, 99, 235, 0.15);
+}

@@ -1,4 +1,5 @@
 import { Calendar, Clock, Eye, Info } from "lucide-react";
+import "./AppointmentCard.css";
 
 /**
  * Format date string (YYYY-MM-DD) into readable format (e.g., "September 10, 2026")

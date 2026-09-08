@@ -8,6 +8,7 @@ import {
   Clock,
   FileText,
 } from "lucide-react";
+import "./AppointmentDetailsModal.css";
 
 function formatDate(dateStr) {
   if (!dateStr) return "Not specified";

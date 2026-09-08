@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { X, Sparkles, CalendarPlus, ArrowRight, Bot } from "lucide-react";
+import "./BookChoiceModal.css";
 
 export default function BookChoiceModal({
   isOpen,

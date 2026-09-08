@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { X, Send, Bot, Sparkles, User, CalendarCheck } from "lucide-react";
 import { generateUniqueId } from "../../utils/id";
+import "./AiChatModal.css";
 
 export default function AiChatModal({ isOpen, onClose, onBookFromAi }) {
   const [messages, setMessages] = useState([

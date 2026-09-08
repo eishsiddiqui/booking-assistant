@@ -1,5 +1,6 @@
 import { CalendarCheck, LogOut, LayoutDashboard } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
+import "./Navbar.css";
 
 export default function Navbar() {
   const { user, logout } = useAuth();

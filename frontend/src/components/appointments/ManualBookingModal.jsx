@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, Calendar, Clock, FileText, AlertCircle } from "lucide-react";
 import { generateUniqueId } from "../../utils/id";
+import "./ManualBookingModal.css";
 
 function getDefaultFormData() {
   const tomorrow = new Date();

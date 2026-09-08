@@ -1,4 +1,5 @@
 import { Clock, CalendarCheck } from "lucide-react";
+import "./DashboardStats.css";
 
 export default function DashboardStats({ upcomingCount, totalCount }) {
   return (

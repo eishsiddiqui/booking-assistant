@@ -1,4 +1,5 @@
 import { Calendar, Plus } from "lucide-react";
+import "./EmptyAppointments.css";
 
 export default function EmptyAppointments({ onBookAppointment }) {
   return (
