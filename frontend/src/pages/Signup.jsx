@@ -1,7 +1,10 @@
+import SignupForm from "../components/auth/SignupForm";
+import "./Signup.css";
+
 export default function Signup() {
   return (
-    <div>
-      <h1>Signup Page</h1>
-    </div>
+    <main className="signup-page-container">
+      <SignupForm />
+    </main>
   );
 }

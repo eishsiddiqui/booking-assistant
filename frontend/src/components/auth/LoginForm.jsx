@@ -1,23 +1,26 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Mail, Lock, AlertCircle, Loader2 } from "lucide-react";
+import { Mail, Lock, AlertCircle, CheckCircle2, Loader2 } from "lucide-react";
 import AuthInput from "./AuthInput";
 import { useAuth } from "../../hooks/useAuth";
 import { loginUser } from "../../api/auth";
 import { validateLoginForm } from "../../utils/validation";
 
 export default function LoginForm() {
+  const location = useLocation();
   const [formData, setFormData] = useState({
-    email: "",
+    email: location.state?.prefillEmail || "",
     password: "",
   });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [infoMessage, setInfoMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(
+    location.state?.successMessage || null
+  );
 
   const { login } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
   // Redirect destination after successful login
   const redirectPath = location.state?.from?.pathname || "/dashboard";
@@ -29,15 +32,17 @@ export default function LoginForm() {
       [name]: value,
     }));
 
-    // Clear error when user begins typing again
+    // Clear alerts when user begins typing again
     if (error) setError(null);
     if (infoMessage) setInfoMessage(null);
+    if (successMessage) setSuccessMessage(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setInfoMessage(null);
+    setSuccessMessage(null);
 
     const validation = validateLoginForm(formData);
     if (!validation.isValid) {
@@ -83,6 +88,13 @@ export default function LoginForm() {
           Welcome! Please sign in to your account
         </p>
       </header>
+
+      {successMessage && (
+        <div className="login-alert login-alert-success" role="status">
+          <CheckCircle2 size={22} className="login-alert-icon" />
+          <span>{successMessage}</span>
+        </div>
+      )}
 
       {error && (
         <div className="login-alert login-alert-error" role="alert">

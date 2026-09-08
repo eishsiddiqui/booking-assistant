@@ -1,0 +1,104 @@
+/* ==========================================================================
+   Dashboard Page Styling
+   ========================================================================== */
+
+.dashboard-container {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f9fc;
+  background-image: radial-gradient(circle at 50% 28%, #ffffff 0%, #f4f6fa 60%, #eef2f7 100%);
+  padding: 40px 24px;
+  box-sizing: border-box;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 540px;
+  border-radius: 32px;
+  padding: 60px 52px 52px 52px;
+  box-shadow: 0 28px 60px -15px rgba(15, 23, 42, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  animation: cardFadeIn 0.35s ease-out;
+}
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dashboard-title {
+  font-size: 34px;
+  font-weight: 700;
+  color: #1e293b;
+  letter-spacing: -0.8px;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
+}
+
+.dashboard-user-info {
+  font-size: 16px;
+  color: #64748b;
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+}
+
+.dashboard-signout-btn {
+  padding: 14px 32px;
+  background: linear-gradient(90deg, #243862 0%, #294f91 40%, #3b82f6 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 24px -4px rgba(41, 79, 145, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.dashboard-signout-btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 14px 30px -4px rgba(41, 79, 145, 0.5);
+  filter: brightness(1.05);
+}
+
+.dashboard-signout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px -2px rgba(41, 79, 145, 0.3);
+}
+
+@media (max-width: 580px) {
+  .dashboard-card {
+    padding: 42px 26px 36px 26px;
+    border-radius: 24px;
+  }
+
+  .dashboard-title {
+    font-size: 28px;
+  }
+
+  .dashboard-user-info {
+    font-size: 14.5px;
+  }
+
+  .dashboard-signout-btn {
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 14px;
+  }
+}
