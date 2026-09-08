@@ -17,6 +17,11 @@ const config = {
   },
 
   clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
+
+  ai: {
+    mistralApiKey: process.env.MISTRAL_API_KEY || "",
+    model: process.env.AI_MODEL || "mistral-small-latest",
+  },
 };
 
 module.exports = config;

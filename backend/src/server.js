@@ -3,6 +3,7 @@ const cors = require("cors");
 const config = require("./config");
 const authRoutes = require("./routes/authRoutes");
 const appointmentRoutes = require("./routes/appointmentRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const requestLogger = require("./middleware/logger");
 
@@ -45,6 +46,7 @@ app.use("/api", generalLimiter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/appointments", appointmentRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.use((req, res) => {
   res.status(404).json({

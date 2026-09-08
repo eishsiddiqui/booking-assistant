@@ -43,7 +43,10 @@ export default function AiChatModal({ isOpen, onClose, onBookFromAi }) {
       id: generateUniqueId("msg-user"),
       sender: "user",
       text,
-      time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     };
 
     setMessages((prev) => [...prev, userMsg]);
@@ -67,7 +70,10 @@ export default function AiChatModal({ isOpen, onClose, onBookFromAi }) {
           description: text.length > 50 ? `${text.slice(0, 47)}...` : text,
           status: "scheduled",
         },
-        time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
       };
       setMessages((prev) => [...prev, aiReply]);
     }, 900);
@@ -87,8 +93,16 @@ export default function AiChatModal({ isOpen, onClose, onBookFromAi }) {
   };
 
   return (
-    <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="modal-content modal-chat-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="modal-content modal-chat-content"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Chat Header */}
         <div className="chat-modal-header">
           <div className="chat-header-brand">
@@ -102,7 +116,9 @@ export default function AiChatModal({ isOpen, onClose, onBookFromAi }) {
                   <Sparkles size={11} /> AI Powered
                 </span>
               </div>
-              <span className="chat-status-indicator">Online & Ready to book</span>
+              <span className="chat-status-indicator">
+                Online & Ready to book
+              </span>
             </div>
           </div>
           <button
@@ -135,7 +151,9 @@ export default function AiChatModal({ isOpen, onClose, onBookFromAi }) {
                       </div>
                       <button
                         type="button"
-                        onClick={() => handleConfirmSuggested(msg.suggestedBooking)}
+                        onClick={() =>
+                          handleConfirmSuggested(msg.suggestedBooking)
+                        }
                         className="btn-confirm-booking"
                       >
                         Confirm Booking
@@ -163,7 +181,6 @@ export default function AiChatModal({ isOpen, onClose, onBookFromAi }) {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Chat Pill Input matching Image 3 */}
         <div className="chat-input-section">
           <form onSubmit={handleSend} className="chat-pill-form">
             <input
