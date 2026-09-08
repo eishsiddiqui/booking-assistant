@@ -2,6 +2,40 @@
    Manual Booking Form Modal Component Styles
    ========================================================================== */
 
+/* Centered Header */
+.manual-modal-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px 28px 20px 28px;
+}
+
+.manual-header-text {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.manual-header-text .modal-title {
+  text-align: center;
+  margin: 0 0 4px 0;
+}
+
+.manual-header-text .modal-subtitle {
+  text-align: center;
+}
+
+.manual-close-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+
 .manual-booking-form {
   padding: 24px 28px;
   display: flex;
@@ -59,4 +93,20 @@
   background-color: #fef2f2;
   border: 1px solid #fee2e2;
   color: #b91c1c;
+}
+
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.spinner-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

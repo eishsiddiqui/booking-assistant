@@ -19,18 +19,28 @@ export default function BookChoiceModal({
   if (!isOpen) return null;
 
   return (
-    <div className="modal-backdrop" onClick={onClose} role="dialog" aria-modal="true">
-      <div className="modal-content modal-choice-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="modal-backdrop"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div
+        className="modal-content modal-choice-content"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
-        <div className="modal-header">
-          <div>
-            <h2 className="modal-title">Book an Appointment</h2>
-            <p className="modal-subtitle">Choose your preferred booking method</p>
+        <div className="modal-header choice-modal-header">
+          <div className="choice-header-text">
+            <h2 className="modal-title choice-modal-title">Book an Appointment</h2>
+            <p className="modal-subtitle choice-modal-subtitle">
+              Choose your preferred booking method
+            </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="modal-close-btn"
+            className="modal-close-btn choice-modal-close-btn"
             aria-label="Close dialog"
           >
             <X size={20} />
@@ -45,7 +55,9 @@ export default function BookChoiceModal({
             onClick={onSelectAiBooking}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelectAiBooking()}
+            onKeyDown={(e) =>
+              (e.key === "Enter" || e.key === " ") && onSelectAiBooking()
+            }
           >
             <div className="choice-badge-row">
               <span className="recommended-badge">
@@ -62,7 +74,8 @@ export default function BookChoiceModal({
 
             <h3 className="choice-title">Book with AI Assistant</h3>
             <p className="choice-description">
-              Describe your desired date, time, and reason in natural conversational language. Our AI handles the scheduling instantly.
+              Describe your desired date, time, and reason in natural
+              conversational language. Our AI handles the scheduling instantly.
             </p>
 
             <div className="choice-action-text">
@@ -77,7 +90,9 @@ export default function BookChoiceModal({
             onClick={onSelectManualBooking}
             role="button"
             tabIndex={0}
-            onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onSelectManualBooking()}
+            onKeyDown={(e) =>
+              (e.key === "Enter" || e.key === " ") && onSelectManualBooking()
+            }
           >
             <div className="choice-badge-row">
               <span className="standard-badge">Standard Form</span>
@@ -91,7 +106,8 @@ export default function BookChoiceModal({
 
             <h3 className="choice-title">Book Manually</h3>
             <p className="choice-description">
-              Choose your date and time slot from a traditional structured calendar form with specific details.
+              Choose your date and time slot from a traditional structured
+              calendar form with specific details.
             </p>
 
             <div className="choice-action-text secondary-action">

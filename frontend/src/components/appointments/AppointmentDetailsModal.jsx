@@ -1,48 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   X,
   CalendarCheck,
-  Copy,
-  Check,
   Calendar,
   Clock,
   FileText,
 } from "lucide-react";
+import { formatFullDate as formatDate, formatTime } from "../../utils/date";
 import "./AppointmentDetailsModal.css";
 
-function formatDate(dateStr) {
-  if (!dateStr) return "Not specified";
-  try {
-    const [year, month, day] = dateStr.split("-");
-    const date = new Date(year, month - 1, day);
-    return date.toLocaleDateString("en-US", {
-      weekday: "short",
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
-
-function formatTime(timeStr) {
-  if (!timeStr) return "Not specified";
-  try {
-    const parts = timeStr.split(":");
-    let hours = parseInt(parts[0], 10);
-    const minutes = parts[1] || "00";
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    return `${hours}:${minutes} ${ampm}`;
-  } catch {
-    return timeStr;
-  }
-}
-
 export default function AppointmentDetailsModal({ appointment, onClose }) {
-  const [copiedId, setCopiedId] = useState(false);
-
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
@@ -54,7 +21,6 @@ export default function AppointmentDetailsModal({ appointment, onClose }) {
   if (!appointment) return null;
 
   const {
-    id,
     appointment_date,
     appointment_time,
     description,
@@ -63,14 +29,6 @@ export default function AppointmentDetailsModal({ appointment, onClose }) {
   } = appointment;
 
   const normalizedStatus = (status || "scheduled").toLowerCase();
-
-  const handleCopyId = () => {
-    if (id && navigator.clipboard) {
-      navigator.clipboard.writeText(id);
-      setCopiedId(true);
-      setTimeout(() => setCopiedId(false), 2000);
-    }
-  };
 
   return (
     <div
@@ -105,29 +63,6 @@ export default function AppointmentDetailsModal({ appointment, onClose }) {
               {description || "Appointment Details"}
             </h2>
           </div>
-
-          {/* Appointment ID Container (matching sample ID card styling) */}
-          {id && (
-            <div className="sample-id-block">
-              <span className="sample-block-label">APPOINTMENT ID</span>
-              <div className="sample-id-row">
-                <span className="sample-id-text">{id}</span>
-                <button
-                  type="button"
-                  onClick={handleCopyId}
-                  className="sample-copy-btn"
-                  title="Copy Appointment ID"
-                  aria-label="Copy Appointment ID"
-                >
-                  {copiedId ? (
-                    <Check size={18} className="copy-check-icon" />
-                  ) : (
-                    <Copy size={18} />
-                  )}
-                </button>
-              </div>
-            </div>
-          )}
 
           {/* Date & Time Box */}
           <div className="sample-schedule-block">

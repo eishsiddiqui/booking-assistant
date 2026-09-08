@@ -1,40 +1,6 @@
 import { Calendar, Clock, Eye, Info } from "lucide-react";
+import { formatDate, formatTime } from "../../utils/date";
 import "./AppointmentCard.css";
-
-/**
- * Format date string (YYYY-MM-DD) into readable format (e.g., "September 10, 2026")
- */
-function formatDate(dateStr) {
-  if (!dateStr) return "";
-  try {
-    const [year, month, day] = dateStr.split("-");
-    const date = new Date(year, month - 1, day);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-}
-
-/**
- * Format time (HH:MM or HH:MM:SS) into 12-hour format (e.g., "3:00 PM")
- */
-function formatTime(timeStr) {
-  if (!timeStr) return "";
-  try {
-    const parts = timeStr.split(":");
-    let hours = parseInt(parts[0], 10);
-    const minutes = parts[1] || "00";
-    const ampm = hours >= 12 ? "PM" : "AM";
-    hours = hours % 12 || 12;
-    return `${hours}:${minutes} ${ampm}`;
-  } catch {
-    return timeStr;
-  }
-}
 
 export default function AppointmentCard({ appointment, onViewDetails }) {
   const { appointment_date, appointment_time, description, status } = appointment;

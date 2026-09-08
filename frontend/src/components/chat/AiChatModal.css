@@ -2,8 +2,9 @@
    AI Chat Assistant Modal Component Styles
    ========================================================================== */
 
-.modal-chat-content {
-  max-width: 620px;
+.modal-content.modal-chat-content {
+  width: 95% !important;
+  max-width: 620px !important;
   height: 590px;
   display: flex;
   flex-direction: column;

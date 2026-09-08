@@ -2,15 +2,69 @@
    Book Choice Modal Component Styles
    ========================================================================== */
 
-.modal-choice-content {
-  max-width: 680px;
+.modal-content.modal-choice-content {
+  width: 92% !important;
+  max-width: 740px !important;
+}
+
+/* Clean Centered Header */
+.choice-modal-header {
+  background: #ffffff;
+  border-bottom: 1px solid #f1f5f9;
+  padding: 24px 28px 20px 28px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.choice-header-text {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.choice-modal-title {
+  color: #0f172a !important;
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  text-align: center;
+}
+
+.choice-modal-subtitle {
+  color: #64748b !important;
+  font-size: 13.5px;
+  margin: 0;
+  text-align: center;
+}
+
+.choice-modal-close-btn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  color: #94a3b8 !important;
+  background: none !important;
+  border-radius: 8px;
+  padding: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.choice-modal-close-btn:hover {
+  background-color: #f1f5f9 !important;
+  color: #1e293b !important;
 }
 
 .choice-options-grid {
   padding: 28px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 22px;
 }
 
 .choice-card {
@@ -28,7 +82,9 @@
 .choice-card:hover {
   transform: translateY(-3px);
   border-color: #3b82f6;
-  box-shadow: 0 14px 28px -4px rgba(37, 99, 235, 0.15), 0 4px 12px rgba(15, 23, 42, 0.05);
+  box-shadow:
+    0 14px 28px -4px rgba(37, 99, 235, 0.15),
+    0 4px 12px rgba(15, 23, 42, 0.05);
 }
 
 .choice-card.primary-choice,
@@ -101,8 +157,9 @@
 .choice-title {
   font-size: 18px;
   font-weight: 700;
-  color: #0f172a;
+  color: #1e293b;
   margin: 0 0 8px 0;
+  letter-spacing: -0.2px;
 }
 
 .choice-description {

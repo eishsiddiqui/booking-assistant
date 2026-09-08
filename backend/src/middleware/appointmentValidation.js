@@ -57,19 +57,6 @@ const validateCreateAppointment = (req, res, next) => {
     });
   }
 
-  // Check if date is in the past
-  const [year, month, day] = trimmedDate.split("-").map(Number);
-  const appointmentDateObj = new Date(year, month - 1, day);
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
-  if (appointmentDateObj < today) {
-    return res.status(400).json({
-      success: false,
-      message: "Validation error: appointment_date cannot be in the past.",
-    });
-  }
-
   // Validate appointment_time
   if (!appointment_time || typeof appointment_time !== "string") {
     return res.status(400).json({
@@ -89,24 +76,35 @@ const validateCreateAppointment = (req, res, next) => {
     });
   }
 
-  // Validate description
-  if (description !== undefined && description !== null) {
-    if (typeof description !== "string") {
-      return res.status(400).json({
-        success: false,
-        message: "Validation error: description must be a string.",
-      });
-    }
+  // Validate that combined date and time is in the future
+  const [year, month, day] = trimmedDate.split("-").map(Number);
+  const [hours, minutes] = trimmedTime.split(":").map(Number);
+  const appointmentDateTime = new Date(year, month - 1, day, hours, minutes, 0);
+  const now = new Date();
 
-    if (description.trim().length > 500) {
-      return res.status(400).json({
-        success: false,
-        message: "Validation error: description cannot exceed 500 characters.",
-      });
-    }
-
-    req.body.description = description.trim();
+  if (appointmentDateTime <= now) {
+    return res.status(400).json({
+      success: false,
+      message: "Validation error: appointment date and time cannot be in the past.",
+    });
   }
+
+  // Validate description
+  if (!description || typeof description !== "string" || description.trim().length < 3) {
+    return res.status(400).json({
+      success: false,
+      message: "Validation error: description is required and must be at least 3 characters long.",
+    });
+  }
+
+  if (description.trim().length > 500) {
+    return res.status(400).json({
+      success: false,
+      message: "Validation error: description cannot exceed 500 characters.",
+    });
+  }
+
+  req.body.description = description.trim();
 
   req.body.appointment_date = trimmedDate;
   req.body.appointment_time = trimmedTime;

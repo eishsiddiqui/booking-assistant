@@ -8,7 +8,7 @@ const pool = require("../db/db");
  */
 const findByIdAndUser = async (id, userId) => {
   const query = `
-    SELECT id, user_id, appointment_date, appointment_time, description, status, created_at
+    SELECT id, user_id, appointment_date::text AS appointment_date, appointment_time, description, status, created_at
     FROM appointments
     WHERE id = $1 AND user_id = $2
   `;
@@ -54,7 +54,7 @@ const create = async ({
   const query = `
     INSERT INTO appointments (user_id, appointment_date, appointment_time, description, status)
     VALUES ($1, $2, $3, $4, $5)
-    RETURNING id, user_id, appointment_date, appointment_time, description, status, created_at
+    RETURNING id, user_id, appointment_date::text AS appointment_date, appointment_time, description, status, created_at
   `;
   const result = await pool.query(query, [
     userId,
@@ -76,7 +76,7 @@ const create = async ({
  */
 const findAllByUser = async ({ userId, status, date }) => {
   let query = `
-    SELECT id, user_id, appointment_date, appointment_time, description, status, created_at
+    SELECT id, user_id, appointment_date::text AS appointment_date, appointment_time, description, status, created_at
     FROM appointments
     WHERE user_id = $1
   `;

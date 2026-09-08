@@ -136,6 +136,102 @@
   gap: 20px;
 }
 
+/* Loading Skeleton */
+.skeleton-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f1f5f9 0%,
+    #e2e8f0 50%,
+    #f1f5f9 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-pill {
+  width: 90px;
+  height: 24px;
+  border-radius: 9999px;
+}
+
+.skeleton-title {
+  width: 70%;
+  height: 22px;
+}
+
+.skeleton-meta {
+  width: 50%;
+  height: 16px;
+}
+
+.skeleton-button {
+  width: 100%;
+  height: 38px;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+/* Dashboard Error Banner */
+.dashboard-error-banner {
+  background-color: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 18px 22px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.error-banner-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.error-retry-btn {
+  background-color: #991b1b;
+  color: #ffffff;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.error-retry-btn:hover {
+  background-color: #7f1d1d;
+  transform: translateY(-1px);
+}
+
 /* ==========================================================================
    Shared Modal Overlay & Dialog Frame Base
    ========================================================================== */
