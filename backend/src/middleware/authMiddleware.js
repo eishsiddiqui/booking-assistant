@@ -1,5 +1,5 @@
 const { verifyToken } = require("../utils/jwt");
-const pool = require("../db/db");
+const userModel = require("../models/userModel");
 
 const authMiddleware = async (req, res, next) => {
   try {
@@ -38,11 +38,9 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // Verify user exists in database
-    const userQuery =
-      "SELECT id, name, email, created_at FROM users WHERE id = $1";
-    const result = await pool.query(userQuery, [decoded.id]);
+    const user = await userModel.findById(decoded.id);
 
-    if (result.rows.length === 0) {
+    if (!user) {
       return res.status(401).json({
         success: false,
         message: "Authorization denied: User not found.",
@@ -50,14 +48,10 @@ const authMiddleware = async (req, res, next) => {
     }
 
     // Attach user payload to request
-    req.user = result.rows[0];
+    req.user = user;
     next();
   } catch (error) {
-    console.error("Auth Middleware Error:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Internal server error during authentication.",
-    });
+    next(error);
   }
 };
 

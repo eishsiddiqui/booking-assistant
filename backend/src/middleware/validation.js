@@ -31,7 +31,6 @@ const validateSignup = (req, res, next) => {
     });
   }
 
-  // Sanitize / normalize
   req.body.name = name.trim();
   req.body.email = email.trim().toLowerCase();
 
