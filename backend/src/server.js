@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const config = require("./config");
 const authRoutes = require("./routes/authRoutes");
+const appointmentRoutes = require("./routes/appointmentRoutes");
 const errorHandler = require("./middleware/errorHandler");
 const requestLogger = require("./middleware/logger");
 
@@ -30,6 +31,7 @@ app.get("/", (req, res) => {
 app.use("/api", generalLimiter);
 
 app.use("/api/auth", authRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 app.use((req, res) => {
   res.status(404).json({
