@@ -1,5 +1,4 @@
-import React from "react";
-import { Bot, Sparkles, X } from "lucide-react";
+import { Bot, X } from "lucide-react";
 import "./ChatHeader.css";
 
 export default function ChatHeader({ onClose }) {

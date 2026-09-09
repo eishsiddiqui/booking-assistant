@@ -25,7 +25,7 @@ app.use(
       if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes("*")) {
         return callback(null, true);
       }
-      return callback(null, true);
+      return callback(new Error(`CORS policy: origin ${origin} is not allowed`));
     },
     credentials: true,
   }),

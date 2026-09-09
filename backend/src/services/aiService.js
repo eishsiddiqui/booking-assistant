@@ -47,9 +47,14 @@ const processMessage = async ({
     }
   }
 
-  // If Groq client is not available or key is not set, use fallback parser
-  if (!groqClient || !config.ai.groqApiKey) {
-    console.log("[AI Service Log] Mode: Fallback Parser (Zero Downtime)");
+  const executeFallback = (reason = null) => {
+    if (reason) {
+      console.warn(
+        `[AI Service Log] Groq LLM unavailable (${reason}). Smoothly utilizing fallback parser.`,
+      );
+    } else {
+      console.log("[AI Service Log] Mode: Fallback Parser (Zero Downtime)");
+    }
     const fallbackResult = runFallbackExtraction(
       userMessage,
       previousExtracted,
@@ -61,6 +66,11 @@ const processMessage = async ({
       fallbackResult.extracted,
     );
     return fallbackResult;
+  };
+
+  // If Groq client is not available or key is not set, use fallback parser
+  if (!groqClient || !config.ai.groqApiKey) {
+    return executeFallback();
   }
 
   try {
@@ -166,20 +176,7 @@ const processMessage = async ({
 
     return result;
   } catch (error) {
-    const duration = Date.now() - startTime;
-    console.warn(
-      `[AI Service Log] Groq LLM unavailable (${error.message}). Smoothly utilizing fallback parser.`,
-    );
-    const fallbackResult = runFallbackExtraction(
-      userMessage,
-      previousExtracted,
-      slotAvailability,
-    );
-    console.log(
-      `[AI Interaction Log] Latency: ${duration}ms | Mode: Fallback | Complete: ${fallbackResult.isComplete} | Extracted:`,
-      fallbackResult.extracted,
-    );
-    return fallbackResult;
+    return executeFallback(error.message);
   }
 };
 

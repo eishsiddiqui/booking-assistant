@@ -4,11 +4,12 @@
  */
 
 /**
- * Format date string (YYYY-MM-DD or ISO string) into readable format (e.g., "Sep 9, 2026")
+ * Helper to parse and format date strings with given Intl options
  * @param {string|Date} dateInput
+ * @param {Intl.DateTimeFormatOptions} options
  * @returns {string}
  */
-export function formatDate(dateInput) {
+function formatDateWithOptions(dateInput, options) {
   if (!dateInput) return "";
 
   try {
@@ -27,21 +28,13 @@ export function formatDate(dateInput) {
 
       const d = new Date(year, month, day);
       if (!isNaN(d.getTime())) {
-        return d.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        });
+        return d.toLocaleDateString("en-US", options);
       }
     }
 
     const fallback = new Date(dateInput);
     if (!isNaN(fallback.getTime())) {
-      return fallback.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
+      return fallback.toLocaleDateString("en-US", options);
     }
 
     return String(dateInput);
@@ -51,51 +44,31 @@ export function formatDate(dateInput) {
 }
 
 /**
+ * Format date string (YYYY-MM-DD or ISO string) into readable format (e.g., "Sep 9, 2026")
+ * @param {string|Date} dateInput
+ * @returns {string}
+ */
+export function formatDate(dateInput) {
+  return formatDateWithOptions(dateInput, {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
+/**
  * Format date string with weekday for detail views (e.g., "Wed, Sep 9, 2026")
  * @param {string|Date} dateInput
  * @returns {string}
  */
 export function formatFullDate(dateInput) {
   if (!dateInput) return "Not specified";
-
-  try {
-    let cleanDate = typeof dateInput === "string" ? dateInput.trim() : "";
-
-    if (cleanDate.includes("T")) {
-      cleanDate = cleanDate.split("T")[0];
-    }
-
-    const parts = cleanDate.split("-");
-    if (parts.length === 3) {
-      const year = parseInt(parts[0], 10);
-      const month = parseInt(parts[1], 10) - 1;
-      const day = parseInt(parts[2], 10);
-
-      const d = new Date(year, month, day);
-      if (!isNaN(d.getTime())) {
-        return d.toLocaleDateString("en-US", {
-          weekday: "short",
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        });
-      }
-    }
-
-    const fallback = new Date(dateInput);
-    if (!isNaN(fallback.getTime())) {
-      return fallback.toLocaleDateString("en-US", {
-        weekday: "short",
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      });
-    }
-
-    return String(dateInput);
-  } catch {
-    return String(dateInput);
-  }
+  return formatDateWithOptions(dateInput, {
+    weekday: "short",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
 
 /**

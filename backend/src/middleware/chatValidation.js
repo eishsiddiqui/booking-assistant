@@ -1,5 +1,4 @@
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const { isUUID, validateUuidParam } = require("./validateUuid");
 
 const validateSendMessage = (req, res, next) => {
   const { message, sessionId } = req.body;
@@ -20,7 +19,7 @@ const validateSendMessage = (req, res, next) => {
   }
 
   if (sessionId !== undefined && sessionId !== null && sessionId !== "") {
-    if (typeof sessionId !== "string" || !UUID_REGEX.test(sessionId.trim())) {
+    if (!isUUID(sessionId)) {
       return res.status(400).json({
         success: false,
         message: "Validation error: 'sessionId' must be a valid UUID.",
@@ -33,18 +32,7 @@ const validateSendMessage = (req, res, next) => {
   next();
 };
 
-const validateSessionIdParam = (req, res, next) => {
-  const { sessionId } = req.params;
-
-  if (!sessionId || !UUID_REGEX.test(sessionId)) {
-    return res.status(400).json({
-      success: false,
-      message: "Validation error: sessionId parameter must be a valid UUID.",
-    });
-  }
-
-  next();
-};
+const validateSessionIdParam = validateUuidParam("sessionId");
 
 module.exports = {
   validateSendMessage,

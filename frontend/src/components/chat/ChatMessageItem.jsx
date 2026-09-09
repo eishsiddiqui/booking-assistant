@@ -1,4 +1,3 @@
-import React from "react";
 import { Bot, User, AlertCircle } from "lucide-react";
 import SuggestedBookingCard from "./SuggestedBookingCard";
 import FallbackActionCard from "./FallbackActionCard";

@@ -1,7 +1,7 @@
+const { validateUuidParam } = require("./validateUuid");
+
 const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_REGEX = /^([01]\d|2[0-3]):([0-5]\d)(:[0-5]\d)?$/;
-const UUID_REGEX =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const isStrictCalendarDate = (dateString) => {
   if (
@@ -23,18 +23,7 @@ const isStrictCalendarDate = (dateString) => {
   );
 };
 
-const validateUUIDParam = (req, res, next) => {
-  const { id } = req.params;
-
-  if (!id || !UUID_REGEX.test(id)) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid ID format: Must be a valid UUID.",
-    });
-  }
-
-  next();
-};
+const validateUUIDParam = validateUuidParam("id");
 
 const validateCreateAppointment = (req, res, next) => {
   const { appointment_date, appointment_time, description } = req.body;

@@ -1,4 +1,3 @@
-import React from "react";
 import { CalendarCheck, Loader2 } from "lucide-react";
 import { formatDate, formatTime } from "../../utils/date";
 import "./SuggestedBookingCard.css";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Send, Sparkles, AlertCircle, X } from "lucide-react";
 import "./ChatInput.css";
 
