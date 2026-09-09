@@ -22,10 +22,16 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin) || allowedOrigins.includes("*")) {
+      if (
+        !origin ||
+        allowedOrigins.includes(origin) ||
+        allowedOrigins.includes("*")
+      ) {
         return callback(null, true);
       }
-      return callback(new Error(`CORS policy: origin ${origin} is not allowed`));
+      return callback(
+        new Error(`CORS policy: origin ${origin} is not allowed`),
+      );
     },
     credentials: true,
   }),
@@ -57,7 +63,7 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-app.listen(config.port, () => {
+app.listen(config.port, "0.0.0.0", () => {
   console.log(`Server running on port ${config.port}`);
 });
 
