@@ -35,6 +35,23 @@ const findScheduledBySlot = async (date, time) => {
 };
 
 /**
+ * Retrieve all scheduled appointments for a specific date
+ * @param {string} date - Date in YYYY-MM-DD
+ * @returns {Promise<Array<object>>} List of scheduled appointments
+ */
+const findScheduledByDate = async (date) => {
+  const query = `
+    SELECT id, appointment_date::text AS appointment_date, appointment_time, status
+    FROM appointments
+    WHERE appointment_date = $1
+      AND status = 'scheduled'
+    ORDER BY appointment_time ASC
+  `;
+  const result = await pool.query(query, [date]);
+  return result.rows;
+};
+
+/**
  * Create a new appointment in the database
  * @param {object} params
  * @param {string} params.userId
@@ -104,6 +121,7 @@ const findAllByUser = async ({ userId, status, date }) => {
 module.exports = {
   findByIdAndUser,
   findScheduledBySlot,
+  findScheduledByDate,
   create,
   findAllByUser,
 };

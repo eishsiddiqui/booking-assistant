@@ -18,9 +18,14 @@ const config = {
 
   clientUrl: process.env.CLIENT_URL || "http://localhost:5173",
 
+  // ai: {
+  //   mistralApiKey: process.env.MISTRAL_API_KEY || "",
+  //   model: process.env.AI_MODEL || "mistral-small-latest",
+  // },
+
   ai: {
-    mistralApiKey: process.env.MISTRAL_API_KEY || "",
-    model: process.env.AI_MODEL || "mistral-small-latest",
+    groqApiKey: process.env.GROQ_API_KEY || "",
+    model: process.env.AI_MODEL || "qwen/qwen3.8-27b",
   },
 };
 

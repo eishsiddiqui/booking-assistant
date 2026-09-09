@@ -51,7 +51,6 @@ const sendMessage = async ({ userId, sessionId, message }) => {
     timestamp: now,
     suggestedBooking: aiResult.isComplete ? aiResult.extracted : null,
     isComplete: aiResult.isComplete,
-    isAmbiguous: aiResult.isAmbiguous,
     needsFormFallback: aiResult.needsFormFallback,
   };
 
@@ -60,7 +59,6 @@ const sendMessage = async ({ userId, sessionId, message }) => {
     ...session.metadata,
     extracted: aiResult.extracted,
     isComplete: aiResult.isComplete,
-    isAmbiguous: aiResult.isAmbiguous,
     needsFormFallback: aiResult.needsFormFallback,
     lastInteraction: now,
   };
@@ -78,7 +76,6 @@ const sendMessage = async ({ userId, sessionId, message }) => {
     reply: aiResult.reply,
     extractedBooking: aiResult.extracted,
     isComplete: aiResult.isComplete,
-    isAmbiguous: aiResult.isAmbiguous,
     needsFormFallback: aiResult.needsFormFallback,
     messages: updatedMessages,
   };
@@ -112,3 +109,4 @@ module.exports = {
   getSessionHistory,
   getUserSessions,
 };
+
