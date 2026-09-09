@@ -1,4 +1,6 @@
-import { Calendar, Plus } from "lucide-react";
+import React from "react";
+import { Calendar } from "lucide-react";
+import BookAppointmentButton from "./BookAppointmentButton";
 import "./EmptyAppointments.css";
 
 export default function EmptyAppointments({ onBookAppointment }) {
@@ -11,14 +13,7 @@ export default function EmptyAppointments({ onBookAppointment }) {
       <p className="empty-description">
         Book your first appointment to get started.
       </p>
-      <button
-        type="button"
-        onClick={onBookAppointment}
-        className="btn-primary empty-action-btn"
-      >
-        <Plus size={18} />
-        <span>Book Appointment</span>
-      </button>
+      <BookAppointmentButton onClick={onBookAppointment} />
     </div>
   );
 }

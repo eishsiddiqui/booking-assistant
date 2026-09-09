@@ -1,0 +1,38 @@
+/* ==========================================================================
+   Book Appointment Button Component Styles
+   ========================================================================== */
+
+.book-appointment-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #1e3a8a 0%, #2563eb 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 4px 14px -2px rgba(37, 99, 235, 0.35);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.book-appointment-btn:hover {
+  transform: translateY(-1.5px);
+  box-shadow: 0 8px 22px -2px rgba(37, 99, 235, 0.45);
+  filter: brightness(1.05);
+}
+
+.book-appointment-btn:active {
+  transform: translateY(0);
+}
+
+.book-appointment-icon {
+  display: block;
+  flex-shrink: 0;
+}

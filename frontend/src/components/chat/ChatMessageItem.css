@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Chat Message Item Styles
+   ========================================================================== */
+
+.chat-message-row {
+  display: flex;
+  gap: 10px;
+  max-width: 84%;
+}
+
+.chat-message-row.ai {
+  align-self: flex-start;
+}
+
+.chat-message-row.user {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chat-message-row.ai .message-avatar {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.chat-message-row.user .message-avatar {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+.message-bubble-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.message-bubble {
+  padding: 13px 18px;
+  border-radius: 18px;
+  font-size: 14px;
+  line-height: 1.5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.chat-message-row.ai .message-bubble {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+  border-top-left-radius: 4px;
+}
+
+.chat-message-row.ai.conflict-message .message-avatar {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.chat-message-row.ai.conflict-message .message-bubble {
+  background-color: #fffbeb;
+  border-color: #fde68a;
+  color: #92400e;
+}
+
+.chat-message-row.ai.error-message .message-avatar {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.chat-message-row.ai.error-message .message-bubble {
+  background-color: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+.chat-message-row.user .message-bubble {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+  color: #ffffff;
+  border-top-right-radius: 4px;
+}
+
+.message-bubble p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.message-time {
+  font-size: 11px;
+  color: #94a3b8;
+  padding: 0 4px;
+}
+
+.chat-message-row.user .message-time {
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .chat-message-row {
+    max-width: 92%;
+  }
+}

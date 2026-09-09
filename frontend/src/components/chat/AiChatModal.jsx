@@ -1,20 +1,12 @@
-import { useState, useEffect, useRef } from "react";
-import {
-  X,
-  Send,
-  Bot,
-  Sparkles,
-  User,
-  CalendarCheck,
-  Calendar,
-  Loader2,
-  AlertCircle,
-} from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { sendChatMessage } from "../../api/chat";
 import { createAppointment } from "../../api/appointments";
-import { formatDate, formatTime } from "../../utils/date";
 import { generateUniqueId } from "../../utils/id";
+import ChatHeader from "./ChatHeader";
+import ChatMessageItem from "./ChatMessageItem";
+import TypingIndicator from "./TypingIndicator";
+import ChatInput from "./ChatInput";
 import "./AiChatModal.css";
 
 export default function AiChatModal({
@@ -28,7 +20,7 @@ export default function AiChatModal({
     {
       id: "msg-init",
       sender: "ai",
-      text: "Hello! 👋 I'm your AI Appointment Assistant. Tell me when you'd like to schedule your appointment and what it's for (e.g., 'Book a General Consultation for tomorrow at 2 PM').",
+      text: "Hello! 👋 I'm your AI Appointment Assistant. Tell me when you'd like to schedule your appointment and what it's for.",
       time: "Just now",
     },
   ]);
@@ -188,178 +180,34 @@ export default function AiChatModal({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Chat Header */}
-        <div className="chat-modal-header">
-          <div className="chat-header-brand">
-            <div className="ai-avatar">
-              <Bot size={20} />
-            </div>
-            <div>
-              <div className="ai-title-row">
-                <h2 className="chat-title">Appointment Assistant</h2>
-                <span className="ai-badge">
-                  <Sparkles size={11} /> AI Powered
-                </span>
-              </div>
-              <span className="chat-status-indicator">
-                Online & Ready to book
-              </span>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="modal-close-btn"
-            aria-label="Close chat dialog"
-          >
-            <X size={20} />
-          </button>
-        </div>
+        <ChatHeader onClose={onClose} />
 
         {/* Chat Messages */}
         <div className="chat-messages-container">
           {messages.map((msg) => (
-            <div
+            <ChatMessageItem
               key={msg.id}
-              className={`chat-message-row ${msg.sender} ${
-                msg.isConflict ? "conflict-message" : ""
-              } ${msg.isError ? "error-message" : ""}`}
-            >
-              <div className="message-avatar">
-                {msg.sender === "ai" ? (
-                  msg.isConflict || msg.isError ? (
-                    <AlertCircle size={16} />
-                  ) : (
-                    <Bot size={16} />
-                  )
-                ) : (
-                  <User size={16} />
-                )}
-              </div>
-              <div className="message-bubble-wrapper">
-                <div className="message-bubble">
-                  <p>{msg.text}</p>
-
-                  {/* Suggested Booking Card if AI extracted complete slots */}
-                  {msg.suggestedBooking && (
-                    <div className="suggested-booking-card">
-                      <div className="suggested-info-row">
-                        <CalendarCheck size={16} />
-                        <span>
-                          {formatDate(msg.suggestedBooking.appointment_date)} at{" "}
-                          {formatTime(msg.suggestedBooking.appointment_time)}
-                        </span>
-                      </div>
-                      {msg.suggestedBooking.description && (
-                        <p className="suggested-desc">
-                          {msg.suggestedBooking.description}
-                        </p>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          handleConfirmSuggested(msg.suggestedBooking, msg.id)
-                        }
-                        className="btn-confirm-booking"
-                        disabled={bookingLoadingId === msg.id}
-                      >
-                        {bookingLoadingId === msg.id ? (
-                          <>
-                            <Loader2 size={14} className="spinner-icon" />
-                            <span>Confirming Booking...</span>
-                          </>
-                        ) : (
-                          <span>Confirm Booking</span>
-                        )}
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Structured Form Fallback Button */}
-                  {msg.needsFormFallback && onFallbackToManualForm && (
-                    <div className="fallback-action-card">
-                      <p className="fallback-note">
-                        Would you prefer to use a structured calendar form?
-                      </p>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onFallbackToManualForm(
-                            msg.extractedBooking || msg.suggestedBooking
-                          )
-                        }
-                        className="btn-fallback-action"
-                      >
-                        <Calendar size={14} />
-                        <span>Open Manual Booking Form</span>
-                      </button>
-                    </div>
-                  )}
-                </div>
-                <span className="message-time">{msg.time}</span>
-              </div>
-            </div>
+              msg={msg}
+              bookingLoadingId={bookingLoadingId}
+              onConfirmSuggested={handleConfirmSuggested}
+              onFallbackToManualForm={onFallbackToManualForm}
+            />
           ))}
 
           {/* Typing indicator */}
-          {isTyping && (
-            <div className="chat-message-row ai">
-              <div className="message-avatar">
-                <Bot size={16} />
-              </div>
-              <div className="message-bubble typing-bubble">
-                <span className="dot" />
-                <span className="dot" />
-                <span className="dot" />
-              </div>
-            </div>
-          )}
+          {isTyping && <TypingIndicator />}
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input Form */}
-        <div className="chat-input-section">
-          {/* Optional Chat Error Alert */}
-          {chatError && (
-            <div className="chat-inline-alert" role="alert">
-              <div className="chat-inline-alert-body">
-                <AlertCircle size={15} />
-                <span>{chatError}</span>
-              </div>
-              <button
-                type="button"
-                className="chat-alert-close-btn"
-                onClick={() => setChatError(null)}
-                aria-label="Dismiss alert"
-              >
-                <X size={14} />
-              </button>
-            </div>
-          )}
-
-          <form onSubmit={handleSend} className="chat-pill-form">
-            <input
-              type="text"
-              placeholder="Ask Appointment AI assistant to schedule a meeting..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              className="chat-pill-input"
-              disabled={isTyping}
-              autoFocus
-            />
-            <button
-              type="submit"
-              className="chat-pill-send-btn"
-              disabled={!inputValue.trim() || isTyping}
-              aria-label="Send message"
-            >
-              <Send size={16} />
-            </button>
-          </form>
-          <div className="chat-footer-note">
-            <Sparkles size={12} className="note-sparkle" />
-            <span>Appointment AI is analyzing your schedule live</span>
-          </div>
-        </div>
+        {/* Input Form & Error Alert */}
+        <ChatInput
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          onSend={handleSend}
+          isTyping={isTyping}
+          chatError={chatError}
+          setChatError={setChatError}
+        />
       </div>
     </div>
   );

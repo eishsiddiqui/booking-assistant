@@ -1,11 +1,12 @@
 import { useState, useMemo, useEffect } from "react";
-import { Plus, CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
+import { CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
 import { fetchAppointments } from "../api/appointments";
 import Navbar from "../components/common/Navbar";
 import DashboardStats from "../components/appointments/DashboardStats";
 import AppointmentCard from "../components/appointments/AppointmentCard";
 import EmptyAppointments from "../components/appointments/EmptyAppointments";
+import BookAppointmentButton from "../components/appointments/BookAppointmentButton";
 import AppointmentDetailsModal from "../components/appointments/AppointmentDetailsModal";
 import BookChoiceModal from "../components/appointments/BookChoiceModal";
 import ManualBookingModal from "../components/appointments/ManualBookingModal";
@@ -93,7 +94,7 @@ export default function Dashboard() {
   // Compute dynamic stats from live data
   const upcomingCount = useMemo(() => {
     return appointments.filter(
-      (a) => (a.status || "scheduled").toLowerCase() === "scheduled"
+      (a) => (a.status || "scheduled").toLowerCase() === "scheduled",
     ).length;
   }, [appointments]);
 
@@ -102,7 +103,9 @@ export default function Dashboard() {
   // Add new appointment and display feedback
   const handleAddAppointment = (newApt) => {
     setAppointments((prev) => [newApt, ...prev]);
-    setToastMessage(`Appointment "${newApt.description || "Booking"}" successfully scheduled!`);
+    setToastMessage(
+      `Appointment "${newApt.description || "Booking"}" successfully scheduled!`,
+    );
     setTimeout(() => {
       setToastMessage(null);
     }, 4000);
@@ -159,32 +162,30 @@ export default function Dashboard() {
         </section>
 
         {/* 3. Statistics Cards */}
-        <DashboardStats
-          upcomingCount={upcomingCount}
-          totalCount={totalCount}
-        />
+        <DashboardStats upcomingCount={upcomingCount} totalCount={totalCount} />
 
         {/* 4. My Appointments Section */}
-        <section className="appointments-section" aria-label="Appointments list">
+        <section
+          className="appointments-section"
+          aria-label="Appointments list"
+        >
           <div className="section-header">
             <h2 className="section-title">My Appointments</h2>
 
-            <button
-              type="button"
+            <BookAppointmentButton
               onClick={() => {
                 setFallbackPrefill(null);
                 setIsChoiceModalOpen(true);
               }}
-              className="book-btn-primary"
-            >
-              <Plus size={18} />
-              <span>Book Appointment</span>
-            </button>
+            />
           </div>
 
           {/* Loading Skeleton View */}
           {isLoading ? (
-            <div className="appointments-grid" aria-label="Loading appointments">
+            <div
+              className="appointments-grid"
+              aria-label="Loading appointments"
+            >
               {[1, 2, 3].map((i) => (
                 <div key={i} className="skeleton-card">
                   <div className="skeleton-shimmer skeleton-pill" />
@@ -235,7 +236,11 @@ export default function Dashboard() {
 
       {/* Manual Booking Form Modal */}
       <ManualBookingModal
-        key={isManualModalOpen ? `manual-${fallbackPrefill ? JSON.stringify(fallbackPrefill) : "fresh"}` : "closed"}
+        key={
+          isManualModalOpen
+            ? `manual-${fallbackPrefill ? JSON.stringify(fallbackPrefill) : "fresh"}`
+            : "closed"
+        }
         isOpen={isManualModalOpen}
         onClose={() => {
           setIsManualModalOpen(false);
