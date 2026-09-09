@@ -1,7 +1,7 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState } from "react";
 import { CheckCircle2, AlertCircle, RefreshCw } from "lucide-react";
 import { useAuth } from "../hooks/useAuth";
-import { fetchAppointments } from "../api/appointments";
+import { useAppointments } from "../hooks/useAppointments";
 import Navbar from "../components/common/Navbar";
 import DashboardStats from "../components/appointments/DashboardStats";
 import AppointmentCard from "../components/appointments/AppointmentCard";
@@ -24,10 +24,16 @@ function getTimeGreeting() {
 export default function Dashboard() {
   const { user, token } = useAuth();
 
-  // Appointments live state
-  const [appointments, setAppointments] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [fetchError, setFetchError] = useState(null);
+  // Appointments state & operations from custom hook
+  const {
+    appointments,
+    isLoading,
+    fetchError,
+    handleRetry,
+    addAppointment,
+    upcomingCount,
+    totalCount,
+  } = useAppointments(token);
 
   // Modal dialog states
   const [isChoiceModalOpen, setIsChoiceModalOpen] = useState(false);
@@ -39,70 +45,9 @@ export default function Dashboard() {
   // Success toast state
   const [toastMessage, setToastMessage] = useState(null);
 
-  // Fetch appointments from live backend
-  useEffect(() => {
-    let isMounted = true;
-
-    async function loadData() {
-      if (!token) {
-        setIsLoading(false);
-        return;
-      }
-
-      try {
-        const data = await fetchAppointments(token);
-        if (isMounted) {
-          setAppointments(data.appointments || []);
-          setFetchError(null);
-        }
-      } catch (err) {
-        if (isMounted) {
-          console.error("Failed to load appointments:", err);
-          setFetchError(err.message || "Failed to load appointments.");
-        }
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    }
-
-    loadData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [token]);
-
-  // Retry handler for manual refresh
-  const handleRetry = () => {
-    if (!token) return;
-    setIsLoading(true);
-    setFetchError(null);
-    fetchAppointments(token)
-      .then((data) => {
-        setAppointments(data.appointments || []);
-      })
-      .catch((err) => {
-        setFetchError(err.message || "Failed to load appointments.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  // Compute dynamic stats from live data
-  const upcomingCount = useMemo(() => {
-    return appointments.filter(
-      (a) => (a.status || "scheduled").toLowerCase() === "scheduled",
-    ).length;
-  }, [appointments]);
-
-  const totalCount = appointments.length;
-
   // Add new appointment and display feedback
   const handleAddAppointment = (newApt) => {
-    setAppointments((prev) => [newApt, ...prev]);
+    addAppointment(newApt);
     setToastMessage(
       `Appointment "${newApt.description || "Booking"}" successfully scheduled!`,
     );

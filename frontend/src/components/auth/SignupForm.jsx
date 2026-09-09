@@ -67,22 +67,22 @@ export default function SignupForm() {
   };
 
   return (
-    <div className="signup-card">
-      <header className="signup-header">
-        <h1 className="signup-title">Create Account</h1>
-        <p className="signup-subtitle">
+    <div className="auth-card">
+      <header className="auth-header">
+        <h1 className="auth-title">Create Account</h1>
+        <p className="auth-subtitle">
           Sign up today to start booking your appointments
         </p>
       </header>
 
       {error && (
-        <div className="signup-alert signup-alert-error" role="alert">
-          <AlertCircle size={22} className="signup-alert-icon" />
+        <div className="auth-alert auth-alert-error" role="alert">
+          <AlertCircle size={22} className="auth-alert-icon" />
           <span>{error}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate className="signup-form">
+      <form onSubmit={handleSubmit} noValidate className="auth-form">
         <div className="form-fields">
           <AuthInput
             id="signup-name"
@@ -141,7 +141,7 @@ export default function SignupForm() {
 
         <button
           type="submit"
-          className="signup-submit-btn"
+          className="auth-submit-btn"
           disabled={isLoading}
         >
           {isLoading ? (
@@ -155,10 +155,10 @@ export default function SignupForm() {
         </button>
       </form>
 
-      <footer className="signup-footer">
+      <footer className="auth-footer">
         <p>
           Already have an account?{" "}
-          <Link to="/login" className="signin-link">
+          <Link to="/login" className="auth-link">
             Sign in now!
           </Link>
         </p>

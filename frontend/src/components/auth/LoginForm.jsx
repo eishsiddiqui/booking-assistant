@@ -81,35 +81,35 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="login-card">
-      <header className="login-header">
-        <h1 className="login-title">Sign In</h1>
-        <p className="login-subtitle">
+    <div className="auth-card">
+      <header className="auth-header">
+        <h1 className="auth-title">Sign In</h1>
+        <p className="auth-subtitle">
           Welcome! Please sign in to your account
         </p>
       </header>
 
       {successMessage && (
-        <div className="login-alert login-alert-success" role="status">
-          <CheckCircle2 size={22} className="login-alert-icon" />
+        <div className="auth-alert auth-alert-success" role="status">
+          <CheckCircle2 size={22} className="auth-alert-icon" />
           <span>{successMessage}</span>
         </div>
       )}
 
       {error && (
-        <div className="login-alert login-alert-error" role="alert">
-          <AlertCircle size={22} className="login-alert-icon" />
+        <div className="auth-alert auth-alert-error" role="alert">
+          <AlertCircle size={22} className="auth-alert-icon" />
           <span>{error}</span>
         </div>
       )}
 
       {infoMessage && (
-        <div className="login-alert login-alert-info" role="status">
+        <div className="auth-alert auth-alert-info" role="status">
           <span>{infoMessage}</span>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} noValidate className="login-form">
+      <form onSubmit={handleSubmit} noValidate className="auth-form">
         <div className="form-fields">
           <AuthInput
             id="login-email"
@@ -149,7 +149,7 @@ export default function LoginForm() {
           </button>
         </div>
 
-        <button type="submit" className="login-submit-btn" disabled={isLoading}>
+        <button type="submit" className="auth-submit-btn" disabled={isLoading}>
           {isLoading ? (
             <>
               <Loader2 size={22} className="btn-spinner" />
@@ -161,10 +161,10 @@ export default function LoginForm() {
         </button>
       </form>
 
-      <footer className="login-footer">
+      <footer className="auth-footer">
         <p>
           Don&apos;t have an account?{" "}
-          <Link to="/signup" className="signup-link">
+          <Link to="/signup" className="auth-link">
             Sign up now!
           </Link>
         </p>

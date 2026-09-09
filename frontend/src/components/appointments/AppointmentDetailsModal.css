@@ -69,46 +69,6 @@
   margin: 0;
 }
 
-.sample-modal-subtitle {
-  font-size: 14px;
-  color: #64748b;
-  margin: 6px 0 0 0;
-  line-height: 1.45;
-}
-
-.sample-id-block {
-  background-color: #f8fafc;
-  border: 1.5px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 16px 20px;
-  margin-bottom: 14px;
-}
-
-.sample-block-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  color: #64748b;
-  letter-spacing: 0.6px;
-  text-transform: uppercase;
-  margin-bottom: 6px;
-}
-
-.sample-id-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.sample-id-text {
-  font-size: 24px;
-  font-weight: 700;
-  color: #0f172a;
-  font-family: monospace;
-  letter-spacing: 0.5px;
-}
-
 .sample-schedule-block {
   background-color: #f8fafc;
   border: 1.5px solid #e2e8f0;
@@ -204,28 +164,4 @@
   font-size: 12px;
   color: #94a3b8;
   margin-top: 14px;
-}
-
-.sample-copy-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background-color: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #475569;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  transition: all 0.15s ease;
-}
-
-.sample-copy-btn:hover {
-  background-color: #e2e8f0;
-  color: #0f172a;
-}
-
-.copy-check-icon {
-  color: #10b981;
 }

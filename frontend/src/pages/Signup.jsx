@@ -3,7 +3,7 @@ import "./Signup.css";
 
 export default function Signup() {
   return (
-    <main className="signup-page-container">
+    <main className="auth-page-container">
       <SignupForm />
     </main>
   );

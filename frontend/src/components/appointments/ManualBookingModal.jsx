@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Calendar, Clock, FileText, AlertCircle, Loader2 } from "lucide-react";
 import { useAuth } from "../../hooks/useAuth";
 import { createAppointment } from "../../api/appointments";
+import Modal from "../common/Modal";
 import "./ManualBookingModal.css";
 
 function getDefaultFormData() {
@@ -35,19 +36,6 @@ export default function ManualBookingModal({
   const [formData, setFormData] = useState(() => getInitialFormData(prefill));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
-
-  // Handle escape key to dismiss
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && !isSubmitting) onClose();
-    };
-    if (isOpen) {
-      window.addEventListener("keydown", handleKeyDown);
-    }
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose, isSubmitting]);
-
-  if (!isOpen) return null;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,24 +91,29 @@ export default function ManualBookingModal({
   const todayStr = new Date().toISOString().split("T")[0];
 
   return (
-    <div className="modal-backdrop" onClick={!isSubmitting ? onClose : undefined} role="dialog" aria-modal="true">
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        {/* Header */}
-        <div className="modal-header manual-modal-header">
-          <div className="manual-header-text">
-            <h2 className="modal-title">Manual Appointment Booking</h2>
-            <p className="modal-subtitle">Choose your preferred schedule and reason</p>
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            className="modal-close-btn manual-close-btn"
-            aria-label="Close dialog"
-            disabled={isSubmitting}
-          >
-            <X size={20} />
-          </button>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      closeOnEscape={!isSubmitting}
+      closeOnBackdropClick={!isSubmitting}
+      ariaLabel="Manual Appointment Booking"
+    >
+      {/* Header */}
+      <div className="modal-header manual-modal-header">
+        <div className="manual-header-text">
+          <h2 className="modal-title">Manual Appointment Booking</h2>
+          <p className="modal-subtitle">Choose your preferred schedule and reason</p>
         </div>
+        <button
+          type="button"
+          onClick={onClose}
+          className="modal-close-btn manual-close-btn"
+          aria-label="Close dialog"
+          disabled={isSubmitting}
+        >
+          <X size={20} />
+        </button>
+      </div>
 
         {/* Form Body */}
         <form onSubmit={handleSubmit} className="manual-booking-form">
@@ -210,7 +203,6 @@ export default function ManualBookingModal({
             </button>
           </div>
         </form>
-      </div>
-    </div>
+    </Modal>
   );
 }

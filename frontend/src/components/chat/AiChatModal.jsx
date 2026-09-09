@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { sendChatMessage } from "../../api/chat";
 import { createAppointment } from "../../api/appointments";
 import { generateUniqueId } from "../../utils/id";
+import Modal from "../common/Modal";
 import ChatHeader from "./ChatHeader";
 import ChatMessageItem from "./ChatMessageItem";
 import TypingIndicator from "./TypingIndicator";
@@ -39,16 +40,6 @@ export default function AiChatModal({
   useEffect(() => {
     if (isOpen) scrollToBottom();
   }, [messages, isOpen, isTyping]);
-
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    if (isOpen) window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
-
-  if (!isOpen) return null;
 
   const sendUserMessage = async (text) => {
     const trimmed = (text || "").trim();
@@ -169,46 +160,41 @@ export default function AiChatModal({
   };
 
   return (
-    <div
-      className="modal-backdrop"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      className="modal-chat-content"
+      ariaLabel="AI Appointment Assistant"
     >
-      <div
-        className="modal-content modal-chat-content"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* Chat Header */}
-        <ChatHeader onClose={onClose} />
+      {/* Chat Header */}
+      <ChatHeader onClose={onClose} />
 
-        {/* Chat Messages */}
-        <div className="chat-messages-container">
-          {messages.map((msg) => (
-            <ChatMessageItem
-              key={msg.id}
-              msg={msg}
-              bookingLoadingId={bookingLoadingId}
-              onConfirmSuggested={handleConfirmSuggested}
-              onFallbackToManualForm={onFallbackToManualForm}
-            />
-          ))}
+      {/* Chat Messages */}
+      <div className="chat-messages-container">
+        {messages.map((msg) => (
+          <ChatMessageItem
+            key={msg.id}
+            msg={msg}
+            bookingLoadingId={bookingLoadingId}
+            onConfirmSuggested={handleConfirmSuggested}
+            onFallbackToManualForm={onFallbackToManualForm}
+          />
+        ))}
 
-          {/* Typing indicator */}
-          {isTyping && <TypingIndicator />}
-          <div ref={messagesEndRef} />
-        </div>
-
-        {/* Input Form & Error Alert */}
-        <ChatInput
-          inputValue={inputValue}
-          setInputValue={setInputValue}
-          onSend={handleSend}
-          isTyping={isTyping}
-          chatError={chatError}
-          setChatError={setChatError}
-        />
+        {/* Typing indicator */}
+        {isTyping && <TypingIndicator />}
+        <div ref={messagesEndRef} />
       </div>
-    </div>
+
+      {/* Input Form & Error Alert */}
+      <ChatInput
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        onSend={handleSend}
+        isTyping={isTyping}
+        chatError={chatError}
+        setChatError={setChatError}
+      />
+    </Modal>
   );
 }

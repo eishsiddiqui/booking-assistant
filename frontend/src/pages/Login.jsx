@@ -3,7 +3,7 @@ import "./Login.css";
 
 export default function Login() {
   return (
-    <main className="login-page-container">
+    <main className="auth-page-container">
       <LoginForm />
     </main>
   );

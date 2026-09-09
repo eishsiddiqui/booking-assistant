@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   X,
   CalendarCheck,
@@ -7,17 +6,10 @@ import {
   FileText,
 } from "lucide-react";
 import { formatFullDate as formatDate, formatTime } from "../../utils/date";
+import Modal from "../common/Modal";
 import "./AppointmentDetailsModal.css";
 
 export default function AppointmentDetailsModal({ appointment, onClose }) {
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
-
   if (!appointment) return null;
 
   const {
@@ -31,92 +23,87 @@ export default function AppointmentDetailsModal({ appointment, onClose }) {
   const normalizedStatus = (status || "scheduled").toLowerCase();
 
   return (
-    <div
-      className="modal-backdrop"
-      onClick={onClose}
-      role="dialog"
-      aria-modal="true"
+    <Modal
+      isOpen={Boolean(appointment)}
+      onClose={onClose}
+      className="modal-details-sample-card"
+      ariaLabel="Appointment Details"
     >
-      <div
-        className="modal-content modal-details-sample-card"
-        onClick={(e) => e.stopPropagation()}
+      {/* Top-Right Cross Close Button */}
+      <button
+        type="button"
+        onClick={onClose}
+        className="modal-corner-close-btn"
+        aria-label="Close dialog"
       >
-        {/* Top-Right Cross Close Button */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="modal-corner-close-btn"
-          aria-label="Close dialog"
-        >
-          <X size={20} />
-        </button>
+        <X size={20} />
+      </button>
 
-        <div className="sample-modal-body">
-          {/* Centered Circular Green Icon Badge */}
-          <div className="modal-center-icon-badge">
-            <CalendarCheck size={28} color="#ffffff" />
-          </div>
+      <div className="sample-modal-body">
+        {/* Centered Circular Green Icon Badge */}
+        <div className="modal-center-icon-badge">
+          <CalendarCheck size={28} color="#ffffff" />
+        </div>
 
-          {/* Title and Subtitle */}
-          <div className="sample-modal-heading">
-            <h2 className="sample-modal-title">
-              {description || "Appointment Details"}
-            </h2>
-          </div>
+        {/* Title */}
+        <div className="sample-modal-heading">
+          <h2 className="sample-modal-title">
+            {description || "Appointment Details"}
+          </h2>
+        </div>
 
-          {/* Date & Time Box */}
-          <div className="sample-schedule-block">
-            <div className="sample-schedule-item">
-              <div className="sample-schedule-icon">
-                <Calendar size={16} />
-              </div>
-              <div className="sample-schedule-text">
-                <span className="sample-schedule-label">Date</span>
-                <span className="sample-schedule-val">
-                  {formatDate(appointment_date)}
-                </span>
-              </div>
+        {/* Date & Time Box */}
+        <div className="sample-schedule-block">
+          <div className="sample-schedule-item">
+            <div className="sample-schedule-icon">
+              <Calendar size={16} />
             </div>
-
-            <div className="sample-schedule-divider" />
-
-            <div className="sample-schedule-item">
-              <div className="sample-schedule-icon">
-                <Clock size={16} />
-              </div>
-              <div className="sample-schedule-text">
-                <span className="sample-schedule-label">Time</span>
-                <span className="sample-schedule-val">
-                  {formatTime(appointment_time)}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Reason / Purpose Details */}
-          {description && (
-            <div className="sample-reason-block">
-              <div className="sample-reason-icon">
-                <FileText size={16} />
-              </div>
-              <div className="sample-reason-content">
-                <span className="sample-block-label">Reason / Purpose</span>
-                <p className="sample-reason-text">{description}</p>
-              </div>
-              <span className={`status-pill status-pill-${normalizedStatus}`}>
-                {status ? status.toUpperCase() : "SCHEDULED"}
+            <div className="sample-schedule-text">
+              <span className="sample-schedule-label">Date</span>
+              <span className="sample-schedule-val">
+                {formatDate(appointment_date)}
               </span>
             </div>
-          )}
+          </div>
 
-          {/* Booked on timestamp if present */}
-          {created_at && (
-            <div className="sample-created-note">
-              <span>Booked on: {new Date(created_at).toLocaleString()}</span>
+          <div className="sample-schedule-divider" />
+
+          <div className="sample-schedule-item">
+            <div className="sample-schedule-icon">
+              <Clock size={16} />
             </div>
-          )}
+            <div className="sample-schedule-text">
+              <span className="sample-schedule-label">Time</span>
+              <span className="sample-schedule-val">
+                {formatTime(appointment_time)}
+              </span>
+            </div>
+          </div>
         </div>
+
+        {/* Reason / Purpose Details */}
+        {description && (
+          <div className="sample-reason-block">
+            <div className="sample-reason-icon">
+              <FileText size={16} />
+            </div>
+            <div className="sample-reason-content">
+              <span className="sample-block-label">Reason / Purpose</span>
+              <p className="sample-reason-text">{description}</p>
+            </div>
+            <span className={`status-pill status-pill-${normalizedStatus}`}>
+              {status ? status.toUpperCase() : "SCHEDULED"}
+            </span>
+          </div>
+        )}
+
+        {/* Booked on timestamp if present */}
+        {created_at && (
+          <div className="sample-created-note">
+            <span>Booked on: {new Date(created_at).toLocaleString()}</span>
+          </div>
+        )}
       </div>
-    </div>
+    </Modal>
   );
 }
