@@ -1,5 +1,4 @@
-export const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
-
+export const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 /**
  * Shared authenticated fetch client with standardized error handling
  * @param {string} endpoint - API path (e.g. '/appointments', '/chat/message')
@@ -47,7 +46,7 @@ export async function authFetch(endpoint, token, options = {}) {
     ) {
       throw new Error(
         "Could not connect to the server. Please ensure the backend is running.",
-        { cause: err }
+        { cause: err },
       );
     }
     throw err;
