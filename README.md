@@ -147,12 +147,11 @@ JWT_SECRET=super_secret_jwt_key
 JWT_EXPIRES_IN=7d
 CLIENT_URL=http://localhost:5173
 
-# AI Service (Optional - A fallback parser runs if key is omitted)
 GROQ_API_KEY=your_groq_api_key_here
 AI_MODEL=qwen/qwen3.8-27b
 ```
 
-3. **Seed Sample Data (Out-of-the-Box Evaluator Accounts)**:
+3. **Seed Sample Data**:
 
 ```bash
 npm run db:seed
@@ -194,13 +193,13 @@ npm run dev
 
 ---
 
-### Step 5: Test Credentials (Ready Out-of-the-Box)
+### Step 5: Test Credentials 
 
-You can log in immediately using the pre-seeded evaluator account:
+You can log in immediately using the pre-seeded account:
 
 | Account                       | Email                      | Password       | Role                                      |
 | :---------------------------- | :------------------------- | :------------- | :---------------------------------------- |
-| **Primary Evaluator Account** | `demo@example.com`         | `Password123!` | Has pre-seeded active & past appointments |
+| **Primary Test Account**      | `demo@example.com`         | `Password123!` | Has pre-seeded active & past appointments |
 | **Secondary Test Account**    | `sarah.connor@example.com` | `Password123!` | Used for testing user isolation           |
 
 _(Alternatively, you can sign up with a new account via the UI)._
@@ -216,7 +215,7 @@ The application can be evaluated using the following workflow:
 3. **Conversational Booking**: Open the AI assistant and request an appointment using natural language (e.g. *"Book a consultation tomorrow at 2 PM"*).
 4. **Field Extraction**: Verify that the assistant extracts the date, time, and description into a suggested booking card.
 5. **Conflict Prevention**: Attempt to book an already occupied slot and verify that the conflict is detected and alternative slots are offered.
-6. **Manual Form Fallback**: Switch from AI booking to the manual calendar form and verify that previously extracted fields are pre-filled.
+6. **Manual Form Fallback**: Switch from AI booking to the manual booking form.
 7. **User Isolation**: Log in with the secondary account (`sarah.connor@example.com` / `Password123!`) and verify that users can only access their own appointments.
 8. **Offline Fallback**: Disable or omit the `GROQ_API_KEY` in `.env` and verify that the deterministic rule parser and manual booking remain fully available.
 
@@ -298,7 +297,7 @@ All protected endpoints require the HTTP header:
 ## Assumptions & Known Limitations
 
 1. **Single-Schedule Scope**: The prototype assumes a single shared service schedule (e.g., a single doctor or clinic schedule). In a multi-provider SaaS, slot uniqueness would be scoped to a `provider_id` or `staff_id`.
-2. **Fixed Time Slot Increments**: Slots are evaluated in discrete hourly/half-hourly blocks (`HH:MM`). Dynamic duration appointments (e.g., 15m quick check vs. 90m surgery) would require PostgreSQL timestamp range types (`tsrange`) with exclusion constraints.
+2. **Fixed Time Slot Increments**: Slots are evaluated in discrete hourly/half-hourly blocks (`HH:MM`).
 3. **Timezone Evaluation**: Dates and times are evaluated relative to the server's local operating system date. A global production deployment would store UTC timestamps and map them against user IANA timezone identifiers (e.g. `America/New_York`).
 4. **Token Storage**: JWT tokens are stored in browser `localStorage` for rapid prototyping and ease of evaluation. In high-security production environments, `httpOnly`, `SameSite=Strict` secure cookies are recommended to eliminate XSS token theft vectors.
 
